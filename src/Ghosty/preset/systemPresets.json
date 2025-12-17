@@ -1,0 +1,37 @@
+[
+  {
+    "id": "catppuccin-mocha",
+    "name": "Catppuccin Mocha",
+    "category": "Dark",
+    "description": "Smooth pastel dark theme with excellent contrast.",
+    "config": "# Catppuccin Mocha\n\ntheme = catppuccin-mocha\nfont-family = \"JetBrains Mono\"\nfont-size = 14\nbackground-opacity = 0.96\nwindow-padding-x = 8\nwindow-padding-y = 8\ncursor-style = block\n"
+  },
+  {
+    "id": "gruvbox-hard",
+    "name": "Gruvbox Dark Hard",
+    "category": "Dark",
+    "description": "Warm high-contrast theme for focused coding.",
+    "config": "theme = GruvboxDarkHard\nfont-family = \"Iosevka\"\nfont-size = 13\nminimum-contrast = 2\nbold-is-bright = true\n"
+  },
+  {
+    "id": "nord",
+    "name": "Nord",
+    "category": "Dark",
+    "description": "Cool, icy colors with balanced contrast.",
+    "config": "theme = Nord\nfont-family = \"JetBrains Mono NL\"\nfont-size = 14\nbackground-opacity = 0.97\n"
+  },
+  {
+    "id": "squirrelsong-dark",
+    "name": "Squirrelsong Dark",
+    "category": "Low Contrast",
+    "description": "Low contrast theme designed for long sessions.",
+    "config": "theme = \"Squirrelsong Dark\"\nfont-size = 14\nminimum-contrast = 1\n"
+  },
+  {
+    "id": "minimal-macos",
+    "name": "Minimal macOS",
+    "category": "Minimal",
+    "description": "Clean macOS-like terminal with subtle blur.",
+    "config": "font-family = \"SF Mono\"\nfont-size = 13\nbackground-opacity = 0.92\nbackground-blur-radius = 20\nmacos-titlebar-style = tabs\n"
+  }
+]
