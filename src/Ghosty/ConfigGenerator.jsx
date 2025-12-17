@@ -1,14 +1,16 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   ChevronRight,
   ChevronDown,
   Info,
   Folder,
   FileText,
+  Menu,
+  X,
 } from "lucide-react";
 
 /* ------------------------------------------------------------
-   MAIN CONFIG GENERATOR (Directory Style)
+   MAIN CONFIG GENERATOR (Responsive)
 ------------------------------------------------------------ */
 export default function ConfigGenerator({ schema, value, onChange }) {
   const groups = Object.keys(schema);
@@ -23,6 +25,8 @@ export default function ConfigGenerator({ schema, value, onChange }) {
     return { group: g, section: s };
   });
 
+  const [showSidebar, setShowSidebar] = useState(false);
+
   const sectionSchema =
     schema[active.group]?.[active.section] || {};
 
@@ -33,52 +37,91 @@ export default function ConfigGenerator({ schema, value, onChange }) {
   }
 
   return (
-    <div className="flex h-full w-screen overflow-hidden bg-zinc-950">
+    <div className="flex h-full w-full overflow-hidden bg-zinc-950">
+      {/* -------------------------------------------------- */}
+      {/* MOBILE OVERLAY */}
+      {/* -------------------------------------------------- */}
+      {showSidebar && (
+        <div
+          onClick={() => setShowSidebar(false)}
+          className="fixed inset-0 bg-black/60 z-30 sm:hidden"
+        />
+      )}
+
       {/* -------------------------------------------------- */}
       {/* DIRECTORY TREE */}
       {/* -------------------------------------------------- */}
-      <aside className="w-72 border-r border-zinc-800 p-2 overflow-auto">
-        {groups.map(group => (
-          <DirectoryGroup
-            key={group}
-            name={group}
-            sections={Object.keys(schema[group])}
-            open={openGroups[group]}
-            active={active}
-            onToggle={() =>
-              setOpenGroups(o => ({ ...o, [group]: !o[group] }))
-            }
-            onSelect={(section) =>
-              setActive({ group, section })
-            }
-          />
-        ))}
+      <aside
+        className={`
+          fixed z-40 inset-y-0 left-0 w-72
+          bg-zinc-950 border-r border-zinc-800
+          transform transition-transform
+          sm:static sm:translate-x-0
+          ${showSidebar ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800 sm:hidden">
+          <span className="text-sm font-semibold">Sections</span>
+          <button onClick={() => setShowSidebar(false)}>
+            <X size={16} />
+          </button>
+        </div>
+
+        <div className="p-2 overflow-auto h-full">
+          {groups.map(group => (
+            <DirectoryGroup
+              key={group}
+              name={group}
+              sections={Object.keys(schema[group])}
+              open={openGroups[group]}
+              active={active}
+              onToggle={() =>
+                setOpenGroups(o => ({ ...o, [group]: !o[group] }))
+              }
+              onSelect={(section) => {
+                setActive({ group, section });
+                setShowSidebar(false);
+              }}
+            />
+          ))}
+        </div>
       </aside>
 
       {/* -------------------------------------------------- */}
       {/* SETTINGS PANEL */}
       {/* -------------------------------------------------- */}
-      <main className="flex-1 p-2 h-screen overflow-hidden">
-        <header className="mb-4">
-          <h2 className="text-lg font-semibold">
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <header className="flex items-center gap-3 px-3 py-2 border-b border-zinc-800">
+          <button
+            onClick={() => setShowSidebar(true)}
+            className="sm:hidden p-1.5 bg-zinc-800 rounded"
+          >
+            <Menu size={16} />
+          </button>
+
+          <h2 className="text-sm sm:text-lg font-semibold truncate">
             {active.group} / {active.section}
           </h2>
         </header>
 
-        {entries.map(([key, def]) => (
-          <SettingRow
-            key={key}
-            def={def}
-            value={value[key]}
-            onChange={(v) => update(key, v)}
-          />
-        ))}
+        {/* Settings */}
+        <div className="flex-1 overflow-auto p-2 sm:p-4 space-y-3">
+          {entries.map(([key, def]) => (
+            <SettingRow
+              key={key}
+              def={def}
+              value={value[key]}
+              onChange={(v) => update(key, v)}
+            />
+          ))}
 
-        {entries.length === 0 && (
-          <div className="opacity-60 text-sm">
-            No settings in this section.
-          </div>
-        )}
+          {entries.length === 0 && (
+            <div className="opacity-60 text-sm">
+              No settings in this section.
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
@@ -97,7 +140,6 @@ function DirectoryGroup({
 }) {
   return (
     <div className="mb-1">
-      {/* GROUP HEADER */}
       <button
         onClick={onToggle}
         className="flex items-center gap-2 w-full px-2 py-1 rounded hover:bg-zinc-900"
@@ -107,7 +149,6 @@ function DirectoryGroup({
         <span className="text-sm font-medium">{name}</span>
       </button>
 
-      {/* SECTIONS */}
       {open && (
         <div className="ml-6 mt-1 space-y-1">
           {sections.map(section => {
@@ -144,7 +185,7 @@ function SettingRow({ def, value, onChange }) {
 
   return (
     <div className="rounded border border-zinc-800 bg-zinc-900">
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3 py-3">
         <div className="flex flex-col gap-0.5">
           <span className="text-sm font-medium">{def.label}</span>
           {def.key && (
@@ -154,7 +195,7 @@ function SettingRow({ def, value, onChange }) {
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {def.doc && (
             <button
               onClick={() => setOpen(!open)}
@@ -169,7 +210,7 @@ function SettingRow({ def, value, onChange }) {
       </div>
 
       {open && def.doc && (
-        <div className="px-4 pb-3 text-xs opacity-80 leading-relaxed border-t border-zinc-800 whitespace-pre-wrap">
+        <div className="px-3 pb-3 text-xs opacity-80 leading-relaxed border-t border-zinc-800 whitespace-pre-wrap">
           {def.doc}
         </div>
       )}
@@ -219,7 +260,9 @@ function RenderControl({ def, value, onChange }) {
           className="bg-zinc-800 rounded px-2 py-1 text-sm"
         >
           {def.options.map(o => (
-            <option key={o} value={o}>{o}</option>
+            <option key={o} value={o}>
+              {o}
+            </option>
           ))}
         </select>
       );
@@ -229,7 +272,7 @@ function RenderControl({ def, value, onChange }) {
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="bg-zinc-800 rounded px-2 py-1 text-sm w-40"
+          className="bg-zinc-800 rounded px-2 py-1 text-sm w-full sm:w-40"
         />
       );
 
