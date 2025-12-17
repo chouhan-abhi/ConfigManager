@@ -1,13 +1,95 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- ===================================================== -->
+    <!-- BASIC META -->
+    <!-- ===================================================== -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Config Archives — Ghostty Config Generator</title>
+    <meta
+      name="description"
+      content="Config Archives is a visual configuration generator for Ghostty. Explore presets, edit settings, preview terminal styles live, and export configs instantly."
+    />
+    <meta
+      name="keywords"
+      content="Ghostty, terminal config, Ghostty config generator, terminal themes, config UI, developer tools"
+    />
+    <meta name="author" content="Abhishek Chouhan" />
+
+    <!-- ===================================================== -->
+    <!-- THEME / PWA -->
+    <!-- ===================================================== -->
+    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- ===================================================== -->
+    <!-- ICONS -->
+    <!-- ===================================================== -->
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Config Archives</title>
+    <link rel="apple-touch-icon" href="/icon.png" />
+
+    <!-- ===================================================== -->
+    <!-- SOCIAL PREVIEW (Open Graph) -->
+    <!-- ===================================================== -->
+    <meta property="og:title" content="Config Archives — Ghostty Config Generator" />
+    <meta
+      property="og:description"
+      content="Visual UI to create, explore, and manage Ghostty terminal configs with live preview."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://config.dracket.art/" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/chouhan-abhi/ConfigManager/refs/heads/main/public/ScreenShots/preview.png"
+    />
+
+    <!-- ===================================================== -->
+    <!-- TWITTER PREVIEW -->
+    <!-- ===================================================== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Config Archives — Ghostty Config Generator" />
+    <meta
+      name="twitter:description"
+      content="Build Ghostty configs visually. Presets, live terminal preview, and export-ready configs."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/chouhan-abhi/ConfigManager/refs/heads/main/public/ScreenShots/preview.png"
+    />
+
+    <!-- ===================================================== -->
+    <!-- PERFORMANCE -->
+    <!-- ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Prevent FOUC -->
+    <style>
+      html {
+        background-color: #09090b;
+      }
+    </style>
   </head>
-  <body>
+
+  <body class="bg-zinc-950 text-zinc-100">
+    <noscript>
+      <div
+        style="
+          padding: 1rem;
+          background: #18181b;
+          color: #fafafa;
+          font-family: system-ui, sans-serif;
+        "
+      >
+        Config Archives requires JavaScript to run.
+      </div>
+    </noscript>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

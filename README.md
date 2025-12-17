@@ -1,16 +1,120 @@
-# React + Vite
+# Ghostty Config Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, visual configuration editor for **Ghostty Terminal**.  
+This app removes the need to manually edit config files by providing a powerful GUI, live preview, presets, and safe import/export.
 
-Currently, two official plugins are available:
+![Preview](https://raw.githubusercontent.com/chouhan-abhi/ConfigManager/refs/heads/main/public/ScreenShots/preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🌐 **Live App:** https://config.dracket.art/
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 📁 **Directory-style settings UI**  
+  Browse Ghostty configs by group & section like a file explorer.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🧠 **Schema-driven editor**  
+  Every option is backed by a schema with:
+  - defaults
+  - documentation
+  - render hints (boolean, color, select, repeatable, keybindings)
+
+- ⌨️ **Keybinding editor**
+  - Action dropdowns
+  - Conflict detection
+  - Platform-aware normalization
+
+- 🎨 **Live terminal preview**
+  See how your configuration *feels* while editing.
+
+- 📦 **Preset Explorer**
+  - Curated community-inspired presets
+  - Preview, copy, apply, or customize
+  - Use presets as a starting point
+
+- 🔁 **Safe Import / Export**
+  - Preserves comments
+  - Preserves unknown keys
+  - Round‑trip safe editing
+
+- 📋 **One‑click copy**
+  Instantly copy final config for Ghostty.
+
+---
+
+## 🧩 Project Structure
+
+```
+src/
+├─ Ghosty/
+│  ├─ config/
+│  │  ├─ config.ts          # Full Ghostty schema
+│  │  ├─ parseConfig.ts     # Robust config parser
+│  │  ├─ serializeConfig.ts# Export to Ghostty format
+│  ├─ ConfigGenerator.tsx  # Directory-style editor UI
+│  ├─ PresetExplorer.tsx   # Presets browser
+│  ├─ LiveTerminalPreview.tsx
+├─ App.tsx
+```
+
+---
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/chouhan-abhi/ConfigManager
+cd ConfigManager
+npm install
+npm run dev
+```
+
+---
+
+## 📥 Importing Existing Config
+
+1. Click **Import**
+2. Paste your Ghostty config
+3. Apply → UI updates automatically
+
+Supports:
+- Comments (`#`)
+- Empty values
+- Percentages, durations, colors
+- Repeated keys
+
+---
+
+## 📤 Exporting Config
+
+- Click **Export**
+- Edit in raw mode if needed
+- Copy to clipboard
+- Paste directly into Ghostty config file
+
+---
+
+## 🎯 Goal of the Project
+
+> **Eliminate manual Ghostty configuration entirely.**
+
+This app aims to expose **every Ghostty option** through a polished UI, while staying fully compatible with the native config format.
+
+---
+
+## 🛠 Tech Stack
+
+- React + Vite
+- Tailwind CSS
+- Lucide Icons
+- Schema‑first architecture
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+Made with ❤️ for Ghostty users.
