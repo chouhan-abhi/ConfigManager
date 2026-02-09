@@ -37,7 +37,7 @@ export default function ConfigGenerator({ schema, value, onChange }) {
   }
 
   return (
-    <div className="flex h-full w-full overflow-hidden bg-zinc-950">
+    <div className="flex h-full w-full overflow-hidden bg-[var(--bg-0)]">
       {/* -------------------------------------------------- */}
       {/* MOBILE OVERLAY */}
       {/* -------------------------------------------------- */}
@@ -54,13 +54,13 @@ export default function ConfigGenerator({ schema, value, onChange }) {
       <aside
         className={`
           fixed z-40 inset-y-0 left-0 w-72
-          bg-zinc-950 border-r border-zinc-800
+          bg-[var(--bg-1)] border-r border-[var(--border-1)]
           transform transition-transform
           sm:static sm:translate-x-0
           ${showSidebar ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800 sm:hidden">
+        <div className="flex items-center justify-between px-3 py-2 border-b border-[var(--border-1)] sm:hidden">
           <span className="text-sm font-semibold">Sections</span>
           <button onClick={() => setShowSidebar(false)}>
             <X size={16} />
@@ -92,10 +92,10 @@ export default function ConfigGenerator({ schema, value, onChange }) {
       {/* -------------------------------------------------- */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="flex items-center gap-3 px-3 py-2 border-b border-zinc-800">
+        <header className="flex items-center gap-3 px-3 py-2 border-b border-[var(--border-1)] bg-[var(--bg-1)]">
           <button
             onClick={() => setShowSidebar(true)}
-            className="sm:hidden p-1.5 bg-zinc-800 rounded"
+            className="sm:hidden p-1.5 bg-[var(--bg-2)] border border-[var(--border-1)] rounded"
           >
             <Menu size={16} />
           </button>
@@ -106,7 +106,7 @@ export default function ConfigGenerator({ schema, value, onChange }) {
         </header>
 
         {/* Settings */}
-        <div className="flex-1 overflow-auto p-2 sm:p-4 space-y-3">
+        <div className="flex-1 overflow-auto p-2 sm:p-4 space-y-3 bg-[var(--bg-0)]">
           {entries.map(([key, def]) => (
             <SettingRow
               key={key}
@@ -142,7 +142,7 @@ function DirectoryGroup({
     <div className="mb-1">
       <button
         onClick={onToggle}
-        className="flex items-center gap-2 w-full px-2 py-1 rounded hover:bg-zinc-900"
+        className="flex items-center gap-2 w-full px-2 py-1 rounded hover:bg-[var(--bg-2)]"
       >
         {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         <Folder size={16} />
@@ -159,10 +159,10 @@ function DirectoryGroup({
               <button
                 key={section}
                 onClick={() => onSelect(section)}
-                className={`flex items-center gap-2 w-full px-2 py-1 rounded text-sm ${
+                className={`flex items-center gap-2 w-full px-2 py-1 rounded text-sm transition ${
                   isActive
-                    ? "bg-indigo-600 text-white"
-                    : "hover:bg-zinc-900 opacity-80"
+                    ? "bg-[var(--accent)] text-black shadow-[0_0_10px_var(--glow)]"
+                    : "hover:bg-[var(--bg-2)] text-[var(--text-2)]"
                 }`}
               >
                 <FileText size={14} />
@@ -184,12 +184,12 @@ function SettingRow({ def, value, onChange }) {
   const v = value ?? def.default;
 
   return (
-    <div className="rounded border border-zinc-800 bg-zinc-900">
+    <div className="rounded border border-[var(--border-1)] bg-[var(--bg-1)]">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3 py-3">
         <div className="flex flex-col gap-0.5">
           <span className="text-sm font-medium">{def.label}</span>
           {def.key && (
-            <span className="text-xs opacity-50 font-mono">
+            <span className="text-xs text-[var(--text-3)] font-mono">
               {def.key}
             </span>
           )}
@@ -199,7 +199,7 @@ function SettingRow({ def, value, onChange }) {
           {def.doc && (
             <button
               onClick={() => setOpen(!open)}
-              className="opacity-60 hover:opacity-100"
+              className="text-[var(--text-3)] hover:text-[var(--text-1)]"
               title="Show documentation"
             >
               <Info size={16} />
@@ -210,7 +210,7 @@ function SettingRow({ def, value, onChange }) {
       </div>
 
       {open && def.doc && (
-        <div className="px-3 pb-3 text-xs opacity-80 leading-relaxed border-t border-zinc-800 whitespace-pre-wrap">
+        <div className="px-3 pb-3 text-xs text-[var(--text-2)] leading-relaxed border-t border-[var(--border-1)] whitespace-pre-wrap">
           {def.doc}
         </div>
       )}
@@ -238,7 +238,7 @@ function RenderControl({ def, value, onChange }) {
           type="number"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="w-20 bg-zinc-800 rounded px-2 py-1 text-sm"
+          className="w-20 bg-[var(--bg-2)] border border-[var(--border-1)] rounded px-2 py-1 text-sm"
         />
       );
 
@@ -248,7 +248,7 @@ function RenderControl({ def, value, onChange }) {
           type="color"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-10 h-6"
+          className="w-10 h-6 bg-transparent"
         />
       );
 
@@ -257,7 +257,7 @@ function RenderControl({ def, value, onChange }) {
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="bg-zinc-800 rounded px-2 py-1 text-sm"
+          className="bg-[var(--bg-2)] border border-[var(--border-1)] rounded px-2 py-1 text-sm"
         >
           {def.options.map(o => (
             <option key={o} value={o}>
@@ -272,20 +272,20 @@ function RenderControl({ def, value, onChange }) {
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="bg-zinc-800 rounded px-2 py-1 text-sm w-full sm:w-40"
+          className="bg-[var(--bg-2)] border border-[var(--border-1)] rounded px-2 py-1 text-sm w-full sm:w-40"
         />
       );
 
     case "keybindings":
       return (
-        <button className="text-xs opacity-70 hover:opacity-100">
+        <button className="text-xs text-[var(--text-2)] hover:text-[var(--text-1)]">
           Edit →
         </button>
       );
 
     case "repeatable":
       return (
-        <button className="text-xs opacity-70 hover:opacity-100">
+        <button className="text-xs text-[var(--text-2)] hover:text-[var(--text-1)]">
           Manage →
         </button>
       );
